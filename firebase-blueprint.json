@@ -1,0 +1,71 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user with role-based access",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "username": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "staff"] }
+      },
+      "required": ["uid", "username", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Inventory item",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "quantity": { "type": "integer" },
+        "supplier": { "type": "string" },
+        "minStockLevel": { "type": "integer", "description": "Threshold for low stock alerts" }
+      },
+      "required": ["name", "category", "price", "quantity"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Supermarket customer",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string", "format": "email" }
+      },
+      "required": ["name", "phone"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Sales transaction",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": { "type": "string" },
+              "name": { "type": "string" },
+              "quantity": { "type": "integer" },
+              "price": { "type": "number" }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["totalAmount", "items", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": { "schema": "User", "description": "User profiles" },
+    "/products/{productId}": { "schema": "Product", "description": "Product inventory" },
+    "/customers/{customerId}": { "schema": "Customer", "description": "Customer records" },
+    "/orders/{orderId}": { "schema": "Order", "description": "Sales records" }
+  }
+}

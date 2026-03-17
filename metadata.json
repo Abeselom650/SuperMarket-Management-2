@@ -1,0 +1,5 @@
+{
+  "name": "Supermarket Management System",
+  "description": "A full-stack system for managing inventory, billing, customers, and sales reports with AI-powered demand prediction.",
+  "requestFramePermissions": []
+}
